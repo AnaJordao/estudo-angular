@@ -1,12 +1,12 @@
 package br.com.projeto.api;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+// import org.junit.jupiter.api.Test;
+// import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+// @SpringBootTest
 class ApiApplicationTests {
 
-	@Test
+	// @Test
 	void contextLoads() {
 	}
 

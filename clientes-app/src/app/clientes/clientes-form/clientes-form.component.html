@@ -3,21 +3,40 @@
     <li class="breadcrumb-item active">Cadastro</li>
 </ol>
 <div class="container">
-    <form>
+    <form #clienteForm="ngForm" (ngSubmit)="onSubmit()">
+        
         <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>ID:</label>
-                    <input type="text" class="form-control" [ngModel]="cliente.id" name="id" disabled><!-- form-control deixa responsivo  -->
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Data Cadastro:</label>
-                    <input type="text" class="form-control" [ngModel]="cliente.dataCadastro" name="dataCadastro" disabled><!-- form-control deixa responsivo  -->
-                </div>
+            <div class="col-md-12">
+                @if(success){
+                    <div class="alert alert-success" role="alert">
+                        Cliente salvo / atualizado com sucesso.
+                    </div>
+                }
+                @for(error of errors; track error){
+                    <div class="alert alert-danger" role="alert">
+                        {{error}}
+                    </div>
+                }
             </div>
         </div>
+
+        @if(cliente.id){
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>ID:</label>
+                        <input type="text" class="form-control" [ngModel]="cliente.id" name="id" disabled><!-- form-control deixa responsivo  -->
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Data Cadastro:</label>
+                        <input type="text" class="form-control" [ngModel]="cliente.dataCadastro" name="dataCadastro" disabled><!-- form-control deixa responsivo  -->
+                    </div>
+                </div>
+            </div>
+        }
+            
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -35,7 +54,7 @@
 
         <div class="row">
             <div class="col-md-2">
-                <button type="submit" class="btn btn-success" (click)="clicar()">
+                <button type="submit" class="btn btn-success">
                     <i class="fa fa-save"></i> Salvar
                 </button>
             </div>

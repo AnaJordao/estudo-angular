@@ -1,5 +1,8 @@
 package io.github.anajordao.clientes.rest;
 
+import java.util.List;
+import java.util.ListIterator;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -43,6 +46,12 @@ public class ClienteController {
         return repository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado."));
+    }
+
+    // READ ALL CLIENTES
+    @GetMapping
+    public List<Cliente> listarTodos(){
+        return repository.findAll();
     }
 
     // DELETE

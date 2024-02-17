@@ -6,6 +6,20 @@
     <form #form="ngForm" (submit)="onSubmit()">
         <div class="row">
             <div class="col-md-12">
+                @if(success){
+                    <div class="alert alert-success" role="alert">
+                        Serviço salvo com sucesso.
+                    </div>
+                }
+                @for(error of errors; track error){
+                    <div class="alert alert-danger" role="alert">
+                        {{error}}
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
                 <div class="form-group">
                     <label>Cliente: </label>
                     <select class="form-control" [(ngModel)]="servico.idCliente" [ngModelOptions]="{standalone: true}">
@@ -54,6 +68,10 @@
                 <button type="submit" class="btn btn-success">
                     <i class="fa fa-save"></i>
                     Salvar
+                </button>
+
+                <button type="button" class="btn btn-danger ml-1" routerLink="/servico-prestado-list">
+                    <i class="fa fa-arrow-alt-circle-left"></i> Voltar
                 </button>
             </div>
         </div>

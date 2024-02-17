@@ -21,12 +21,12 @@ import io.github.anajordao.clientes.model.repository.ClienteRepository;
 import io.github.anajordao.clientes.model.repository.ServicoPrestadoRepository;
 import io.github.anajordao.clientes.rest.dto.ServicoPrestadoDTO;
 import io.github.anajordao.clientes.util.BigDecimalConverter;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/servicos-prestados")
 @RequiredArgsConstructor // faz um construtor com todos os atributos da classe
-@CrossOrigin("http://localhost:4200")
 public class ServicoPrestadoController {
     
     private final ClienteRepository clienteRepository;
@@ -35,7 +35,7 @@ public class ServicoPrestadoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ServicoPrestado salvar(@RequestBody ServicoPrestadoDTO dto){
+    public ServicoPrestado salvar(@RequestBody @Valid ServicoPrestadoDTO dto){
         LocalDate data = LocalDate.parse(dto.getData(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         Integer idCliente = dto.getIdCliente();
 

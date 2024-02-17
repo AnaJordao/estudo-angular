@@ -13,6 +13,8 @@ export class ServicoPrestadoFormComponent implements OnInit {
   
   clientes : Cliente[] = [];
   servico : ServicoPrestado;
+  success: boolean = false;
+  errors: string[] | undefined;
   
   constructor(
     private clienteService : ClientesService,
@@ -30,9 +32,14 @@ export class ServicoPrestadoFormComponent implements OnInit {
 
   onSubmit() {
     this.service
-      .salvar(this.servico)
-      .subscribe(res => {
-        console.log(res);
-      })
-  }
+        .salvar(this.servico)
+        .subscribe(res => {
+            this.success = true;
+            this.errors = [];
+            this.servico = new ServicoPrestado();
+        }, erroRes => {
+            this.success = false;
+            this.errors =  erroRes.error.errors;
+        });
+    }
 }

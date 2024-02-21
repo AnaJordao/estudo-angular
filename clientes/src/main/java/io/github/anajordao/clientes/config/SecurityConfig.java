@@ -23,10 +23,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return new ShopmeUserDetailsService();
-    }
+    public UserDetailsService userDetailsService;
  
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -34,10 +31,19 @@ public class SecurityConfig {
     }
 
     @Bean
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+            .inMemoryAuthentication()
+                .withUser("fulano")
+                .password("123")
+                .roles("USER");
+    }
+
+    @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception{
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
 
-        authenticationManagerBuilder.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
+        authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 
         AuthenticationManager authenticationManager = authenticationManagerBuilder.build();
 
@@ -48,8 +54,7 @@ public class SecurityConfig {
                 .permitAll()
             .anyRequest().authenticated().and()
             .authenticationManager(authenticationManager)
-            .sessionManager()
-            .sesseionCreationPolicy(SessionCreationPolicy.STATELESS);
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         http.headers().frameOptions().disable();
 

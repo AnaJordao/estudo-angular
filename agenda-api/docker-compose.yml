@@ -13,7 +13,7 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_USER: dvega
     volumes:
-      - postgres:/data/postgres
+      - ./data:/var/lib/postgresql/data
     ports:
       - '5432'
     restart: unless-stopped

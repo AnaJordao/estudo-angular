@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Contato } from './contato';
 import { ContatoService } from '../contato.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-contato',
@@ -8,19 +9,56 @@ import { ContatoService } from '../contato.service';
   styleUrl: './contato.component.css'
 })
 export class ContatoComponent implements OnInit {
-  
-  constructor(private service: ContatoService){
 
+  formulario!: FormGroup;
+  contatos: Contato[] = [];
+  colunas = ['foto', 'id', 'nome', 'email', 'favorito']
+  
+  constructor(private service: ContatoService,
+              private fb: FormBuilder){}
+  
+  montarFormulario(){
+    this.formulario = this.fb.group({
+    nome: ['', Validators.required],
+    email: ['', [Validators.email, Validators.required]]
+    })
+  }
+
+  listarContatos(){
+    this.service.list().subscribe(res => {
+      console.log(res)
+      this.contatos = res;
+    })
   }
   
   ngOnInit(): void {
-      const c: Contato = new Contato();
-      c.nome =  'Joao';
-      c.email =  'joao@gmail.com';
-      c.favorito = false;
+    this.listarContatos();
+    this.montarFormulario();
+  }
 
-      this.service.save(c).subscribe(res => {
-        console.log(res);
-      })
+  favoritar(contato : Contato){
+    this.service.favorite(contato).subscribe(res => {
+      contato.favorito = !contato.favorito;
+    })
+  }
+  
+  submit(){
+    const formValues = this.formulario.value;
+    const contato: Contato = new Contato(formValues.nome, formValues.email)
+    this.service.save(contato).subscribe(res => {
+      let lista: Contato[] = [...this.contatos, res];
+      this.contatos = lista;
+    })
+  }
+
+  uploadFoto(event: any, contato: Contato){
+    const files = event.target.files;
+    if(files){
+      const foto = files[0];
+      const formData: FormData = new FormData();
+      formData.append("foto", foto);
+      this.service.upload(contato, formData)
+      .subscribe(res => this.listarContatos());
+    }
   }
 }

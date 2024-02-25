@@ -4,7 +4,7 @@
 
 ▶ E o curso [Spring Boot e Angular - 2023](https://www.youtube.com/playlist?list=PLWXw8Gu52TRLR24HGjSiVrE5MrkU5tWX-) no YouTube como auxiliar,
 
-▶ E o curso [🔥 New in Spring Boot 3.1 - Spring Boot Docker Compose Module](https://youtu.be/lS1GwdIfk0c?si=VvINhXacbLAZ-dz0) no YouTube para a utilização do Docker juntamente com o Spring Boot.
+▶ E o curso [Streamline Your Development: Spring Boot with PostgreSQL & pgAdmin in Docker](https://youtu.be/XDlgWyVfSMA?si=ID8-qTyCPZ4TEsKd) no YouTube para a utilização do Docker juntamente com o Spring Boot.
 
 
 ## Extensões  usadas para o VSCode

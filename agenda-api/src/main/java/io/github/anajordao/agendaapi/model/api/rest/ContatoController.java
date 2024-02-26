@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -46,8 +49,13 @@ public class ContatoController {
     }
 
     @GetMapping
-    public List <Contato> list(){
-        return repository.findAll();
+    public Page<Contato> list(
+        @RequestParam(value = "page", defaultValue = "0") Integer pagina,
+        @RequestParam(value = "size", defaultValue = "10") Integer tamanhoPag
+    ){
+        Sort sort = Sort.by(Sort.Direction.ASC, "nome");
+        PageRequest pageRequest = PageRequest.of(pagina, tamanhoPag, sort);
+        return repository.findAll(pageRequest);
     }
 
     @PatchMapping("{id}/favorito")
